@@ -82,7 +82,13 @@ class Identity
     {
         try {
             if (!self::$initialized) {
-                if (!isset($ini_path)) $ini_path = dirname(__FILE__) . '/../config/druid.ini';
+                 if (!isset($ini_path)){
+                    if(env('APP_ENV') == 'local') {
+                        $ini_path = dirname(__FILE__) . '/../config/druid-local.ini';
+                    }else{
+                        $ini_path = dirname(__FILE__) . '/../config/druid.ini';
+                    }
+                }
                 Config::$ini_path = $ini_path;
                 self::$initialized = true;
                 AutoloaderClass::init();
